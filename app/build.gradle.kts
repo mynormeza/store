@@ -47,6 +47,16 @@ dependencies {
     implementation(Dependencies.constraintLayout)
     implementation(Dependencies.navigationFragment)
     implementation(Dependencies.navigationUi)
+    implementation(Dependencies.lifecycleViewModel)
+    implementation(Dependencies.coroutinesCore)
+    implementation(Dependencies.coroutinesAndroid)
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.interceptor)
+    implementation(Dependencies.gsonConverter)
+    implementation(Dependencies.liveData)
+    implementation(Dependencies.arrow)
+
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExt)
     androidTestImplementation(Dependencies.espressoCore)
