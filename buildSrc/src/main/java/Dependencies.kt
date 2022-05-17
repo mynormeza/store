@@ -8,6 +8,7 @@ object Versions {
     const val androidCompat = "1.4.1"
     const val constraintLayout = "2.1.3"
     const val navigation = "2.4.2"
+    const val hilt = "2.40.5"
 
     const val androidLifecycle = "2.4.0"
     const val coroutines = "1.6.0"
@@ -31,6 +32,8 @@ object Dependencies {
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExtVersion}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
 
+    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidLifecycle}"
     const val coroutinesCore ="org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"

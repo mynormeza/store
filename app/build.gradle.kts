@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
 }
 
@@ -19,7 +21,13 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            buildConfigField("String", "apiUrl", "\"https://gist.githubusercontent.com\"")
+        }
+
         getByName("release") {
+            buildConfigField("String", "apiUrl", "\"https://gist.githubusercontent.com\"")
+
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -55,7 +63,8 @@ dependencies {
     implementation(Dependencies.gsonConverter)
     implementation(Dependencies.liveData)
     implementation(Dependencies.arrow)
-
+    kapt(Dependencies.hiltAndroidCompiler)
+    implementation(Dependencies.hilt)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExt)

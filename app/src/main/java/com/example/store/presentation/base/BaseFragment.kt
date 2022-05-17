@@ -16,7 +16,6 @@ abstract class BaseFragment : Fragment() {
         with(activity) { if (this is MainActivity) this.findViewById<View>(R.id.fl_progress)?.visibility = viewStatus }
 
     fun showError(failure: Failure) {
-        // Here you could show spefici message froma  failure, in the future
         requireContext().myToast(getString(R.string.general_error))
     }
 }
