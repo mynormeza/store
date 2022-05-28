@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataModule {
 
     @Binds
-    abstract fun bindPlayRepository(productsRepository: ProductsRepository): IProductsRepository
+    abstract fun bindProductRepository(productsRepository: ProductsRepository): IProductsRepository
 }
