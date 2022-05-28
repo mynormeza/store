@@ -69,4 +69,7 @@ dependencies {
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExt)
     androidTestImplementation(Dependencies.espressoCore)
+    testImplementation(Dependencies.mockk)
+    testImplementation(Dependencies.kluent)
+    testImplementation(Dependencies.robolectric)
 }

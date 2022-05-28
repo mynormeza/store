@@ -18,7 +18,9 @@ object Versions {
     const val junitVersion = "4.13.2"
     const val junitExtVersion = "1.1.3"
     const val espressoVersion = "3.4.0"
-
+    const val mockkVersion = "1.12.4"
+    const val kluent = "1.68"
+    const val robolectric = "4.8"
 }
 
 object Dependencies {
@@ -31,6 +33,9 @@ object Dependencies {
     const val junit = "junit:junit:${Versions.junitVersion}"
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExtVersion}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
+    const val mockk ="io.mockk:mockk:${Versions.mockkVersion}"
+    const val kluent = "org.amshove.kluent:kluent:${Versions.kluent}"
+    const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"

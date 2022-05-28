@@ -13,13 +13,13 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getProductsUseCase: GetProductsUseCase
 ) : BaseViewModel() {
-    private val _post = MutableLiveData<List<Product>>()
-    val post get() = _post
+    private val _products = MutableLiveData<List<Product>>()
+    val products get() = _products
 
     fun loadProducts() {
         getProductsUseCase(None, viewModelScope) {
             it.fold(::handleFailure) { list ->
-                _post.value = list
+                _products.value = list
             }
         }
     }
