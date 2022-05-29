@@ -66,12 +66,12 @@ dependencies {
     implementation(Dependencies.arrow)
     kapt(Dependencies.hiltAndroidCompiler)
     implementation(Dependencies.hilt)
-    implementation(platform("com.google.firebase:firebase-bom:30.0.0"))
-
-    // Declare the dependencies for the Remote Config and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-config-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(Dependencies.roomRuntime)
+    kapt(Dependencies.roomCompiler)
+    implementation(Dependencies.roomKtx)
+    implementation(platform(Dependencies.firebaseBom))
+    implementation(Dependencies.firebaseConfig)
+    implementation(Dependencies.firebaseAnalytics)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExt)

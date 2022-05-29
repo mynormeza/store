@@ -9,6 +9,8 @@ object Versions {
     const val constraintLayout = "2.1.3"
     const val navigation = "2.4.2"
     const val hilt = "2.40.5"
+    const val room = "2.4.1"
+    const val firebaseBom = "30.0.0"
 
     const val androidLifecycle = "2.4.0"
     const val coroutines = "1.6.0"
@@ -47,5 +49,11 @@ object Dependencies {
     const val interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.interceptor}"
     const val arrow ="io.arrow-kt:arrow-core:${Versions.arrow}"
     const val liveData = "androidx.lifecycle:lifecycle-livedata:${Versions.androidLifecycle}"
+    const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
+    const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    const val firebaseConfig = "com.google.firebase:firebase-config-ktx"
 }
 
