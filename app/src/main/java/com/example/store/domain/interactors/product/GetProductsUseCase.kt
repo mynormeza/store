@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetProductsUseCase @Inject constructor(
     private val repository: IProductsRepository
-) : UseCase<List<Product>, None>(){
+) : UseCase<List<Product>, None>() {
     override suspend fun run(params: None): Either<Failure, List<Product>> {
         return repository.getProducts()
     }

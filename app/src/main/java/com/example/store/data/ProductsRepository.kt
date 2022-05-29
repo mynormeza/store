@@ -10,16 +10,20 @@ import com.example.store.domain.repository.IProductsRepository
 import retrofit2.Call
 import javax.inject.Inject
 
-class ProductsRepository @Inject constructor (
+class ProductsRepository @Inject constructor(
     private val productsService: ProductsService,
     private val networkValidator: NetworkValidator,
 ) : IProductsRepository {
     override fun getProducts(): Either<Failure, List<Product>> {
-        return when(networkValidator.isNetworkAvailable()) {
+        return when (networkValidator.isNetworkAvailable()) {
             true -> {
-                request(productsService.getProducts(), {
-                    it.products
-                }, ProductsResponse(emptyList()))
+                request(
+                    productsService.getProducts(),
+                    {
+                        it.products
+                    },
+                    ProductsResponse(emptyList()),
+                )
             }
             false -> Either.Left(Failure.NetworkConnection)
         }

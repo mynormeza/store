@@ -18,9 +18,11 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(application = ViewModelTest.ApplicationStub::class,
+@Config(
+    application = ViewModelTest.ApplicationStub::class,
     manifest = Config.NONE,
-    sdk = [Build.VERSION_CODES.O_MR1])
+    sdk = [Build.VERSION_CODES.O_MR1]
+)
 class ViewModelTest {
     private lateinit var mainViewModel: MainViewModel
     @Rule

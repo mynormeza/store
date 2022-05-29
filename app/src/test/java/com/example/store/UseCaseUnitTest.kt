@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
 class UseCaseUnitTest {
     private lateinit var getProducts: GetProductsUseCase
     @Rule

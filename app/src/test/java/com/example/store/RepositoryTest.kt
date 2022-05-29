@@ -31,10 +31,9 @@ class RepositoryTest {
     @MockK private lateinit var productsCall: Call<ProductsResponse>
     @MockK private lateinit var productsResponse: Response<ProductsResponse>
 
-
     @Before
     fun setUp() {
-        networkRepository = ProductsRepository(service,networkValidator)
+        networkRepository = ProductsRepository(service, networkValidator)
     }
 
     @Test
@@ -48,7 +47,7 @@ class RepositoryTest {
         val products = networkRepository.getProducts()
 
         products shouldBeEqualTo Either.Right(emptyList())
-        verify(exactly = 1) { service.getProducts()}
+        verify(exactly = 1) { service.getProducts() }
     }
 
     @Test fun `should get product list from service`() {
@@ -99,5 +98,4 @@ class RepositoryTest {
         products.isLeft() shouldBeEqualTo true
         products.fold({ failure -> failure shouldBeInstanceOf Failure.ServerError::class.java }, {})
     }
-
 }
