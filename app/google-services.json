@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445477847417",
+    "project_id": "cabify-4d470",
+    "storage_bucket": "cabify-4d470.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445477847417:android:c743aaad26769812e6efa8",
+        "android_client_info": {
+          "package_name": "com.example.store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445477847417-g0seg3b65bfvbumerng6pvah19eo2jdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEH8gHpUsbhKlj3JxI1pZK78fDF-bez3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445477847417-g0seg3b65bfvbumerng6pvah19eo2jdp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

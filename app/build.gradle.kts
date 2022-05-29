@@ -5,6 +5,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -65,6 +66,12 @@ dependencies {
     implementation(Dependencies.arrow)
     kapt(Dependencies.hiltAndroidCompiler)
     implementation(Dependencies.hilt)
+    implementation(platform("com.google.firebase:firebase-bom:30.0.0"))
+
+    // Declare the dependencies for the Remote Config and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-config-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExt)
