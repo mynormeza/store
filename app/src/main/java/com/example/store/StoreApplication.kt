@@ -14,7 +14,7 @@ class StoreApplication : Application() {
         FirebaseApp.initializeApp(this)
         val remoteConfig = Firebase.remoteConfig
         val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 3600
+            minimumFetchIntervalInSeconds = 0
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.fetchAndActivate()

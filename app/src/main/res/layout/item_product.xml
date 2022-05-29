@@ -3,58 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="12dp"
-    android:layout_marginTop="12dp"
-
-    android:layout_height="wrap_content">
+    android:layout_marginTop="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/iv_product"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:srcCompat="@drawable/ic_cabify"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintDimensionRatio="H,16:4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="H,16:4"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cabify" />
 
         <ImageView
             android:id="@+id/iv_seller"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            app:srcCompat="@drawable/ic_cabify"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_product"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:srcCompat="@drawable/ic_cabify" />
 
         <TextView
             android:id="@+id/tv_product_name"
-            android:textSize="18sp"
-            android:fontFamily="@font/nunito_semibold"
             android:layout_width="wrap_content"
-            android:layout_marginHorizontal="10dp"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginHorizontal="10dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:textSize="18sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@+id/tv_product_price"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/iv_seller"
             app:layout_constraintTop_toTopOf="@+id/iv_seller"
-            tools:text="Test"/>
+            tools:text="Test" />
+
+        <TextView
+            android:id="@+id/tv_promotion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="?colorError"
+            android:textSize="16sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@+id/tv_product_price"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/iv_seller"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+            tools:text="Test" />
 
         <TextView
             android:id="@+id/tv_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:fontFamily="@font/nunito_bold"
             android:layout_marginEnd="10dp"
-            tools:text="Test"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_seller"/>
+            app:layout_constraintTop_toTopOf="@+id/iv_seller"
+            tools:text="Test" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

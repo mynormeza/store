@@ -5,18 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.store.R
 import com.example.store.databinding.ItemProductBinding
-import com.example.store.domain.model.Product
+import com.example.store.presentation.model.FullProduct
 
 class ProductsAdapter(val onClickListener: OnClickListener) :
-    ListAdapter<Product, ProductsAdapter.ProductViewHolder>(DiffCallback) {
+    ListAdapter<FullProduct, ProductsAdapter.ProductViewHolder>(DiffCallback) {
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
-        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<FullProduct>() {
+        override fun areItemsTheSame(oldItem: FullProduct, newItem: FullProduct): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+        override fun areContentsTheSame(oldItem: FullProduct, newItem: FullProduct): Boolean {
             return oldItem.code == newItem.code
         }
     }
@@ -35,12 +36,13 @@ class ProductsAdapter(val onClickListener: OnClickListener) :
 
     class ProductViewHolder(private var binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
+        fun bind(product: FullProduct) {
             binding.tvProductName.text = product.name
-            binding.tvProductPrice.text = product.price.toString()
+            binding.tvProductPrice.text = binding.root.context.getString(R.string.price, product.price)
+            binding.tvPromotion.text = product.discountLabel
         }
     }
-    class OnClickListener(val clickListener: (product: Product) -> Unit) {
-        fun onClick(product: Product) = clickListener(product)
+    class OnClickListener(val clickListener: (product: FullProduct) -> Unit) {
+        fun onClick(product: FullProduct) = clickListener(product)
     }
 }
