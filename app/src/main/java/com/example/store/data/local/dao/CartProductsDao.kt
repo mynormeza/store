@@ -13,7 +13,7 @@ interface CartProductsDao {
 
     @Query("SELECT * FROM products;")
     fun getAll(): List<CartProductEntity>
-    
+
     @Update
     fun update(product: CartProductEntity)
 
