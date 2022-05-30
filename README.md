@@ -1,9 +1,9 @@
 # App behavior
-The display of data in the app is online only (needs internet connection) to display the list of product, but the cart has full off line support. If there is no data the list will show an empty message, if there is no internet while loading data from the network a message about it will appear.
+The display of data in the app is online only (needs internet connection) to display the list of product, but the cart has full off line support. If there is no data the main list will show an empty message, if there is no internet while loading data from the network a message about it will appear.
 
-The list of products in the cart and all the info in the cart have live updates from the database, this way when an object is deleted it will update the list and summary automatically. The user is able to cancel or place an order, both operation will clear the cart, the user is also able to delete products by swiping items from the list.
+The list of products in the cart and all the info in the cart have live updates from the database, this way when an object is deleted it will update the list and summary automatically. The user is able to cancel or place an order, both operation will clear the cart, the user is also able to delete products from the cart by swiping items from the list.
 
-Both lists (cart and main) have a ListAdapter with DiffUtil to efficiently perform the updates and to show smooth animation when deleting products.
+In the main list, the big Cabify image is supposed to be the product image, and the small one is supposed to be the store image.
 
 **Discounts** can be modified out side of the app context (in firebase) but the app is limited to 2 types of discount according to the challenge.
 
@@ -17,6 +17,8 @@ There is a base fragment to perform operations that are to be used in most fragm
 
 **Discounts** are created using firebase remote config, I used the following format for each discount, this way we can modify them:
 
+Both lists (cart and main) have a ListAdapter with DiffUtil to efficiently perform the updates and to show smooth animation when deleting products.
+
 ```json
 {
   "codes": [
@@ -29,5 +31,5 @@ There is a base fragment to perform operations that are to be used in most fragm
   "message": "Buy 3 or more and get a discount of 1 euro on each"
 }
 ```
-Each discount can be applied to as many items as we want through the `codes` array, but only one can be applied, Multi Buy Discount has priority over the Bulk Discount that means that if an items has both discount only Multi Buy will be applied, this is set through code, if that's to be changed the app needs to be released again with a new build if new discounts need to be created a new build will be needed as well. The difference between discounts format in the json is that Multi Buy Discount has a `discountPercent` prop, with this we can set the item to be free or discounted by a certain percentage, and Bulk Discount has a `reduce_price_by` prop that allows price reduction by currency. `label` prop is the discount name displayed in the main list, `message` prop is the description or rules of the discount, `min_valid_quantity` is the min needed of items in an order for the discount to be applied, `items_to_apply` is the amount of items that the discount needs to be applied to (in Bulk Discount if this is 0 it means that the discount will be applied to all items of that type in the order.
+Each discount can be applied to as many items as we want through the `codes` array, but only one can be applied per item, Multi Buy Discount has priority over the Bulk Discount that means that if an items has both discount only Multi Buy will be applied, this is set through code, if that's to be changed the app needs to be released again with a new build if new discounts need to be created a new build will be needed as well. The difference between discounts format in the json is that Multi Buy Discount has a `discountPercent` prop, with this we can set the item to be free or discounted by a certain percentage, and Bulk Discount has a `reduce_price_by` prop that allows price reduction by currency. `label` prop is the discount name displayed in the main list, `message` prop is the description or rules of the discount, `min_valid_quantity` is the min needed of items in an order for the discount to be applied, `items_to_apply` is the amount of items that the discount needs to be applied to (in Bulk Discount if this is 0 it means that the discount will be applied to all items of that type in the order.
 
