@@ -1,6 +1,7 @@
 package com.example.store.presentation.ui.cart.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -45,6 +46,13 @@ class CartProductAdapter : ListAdapter<CartProductEntity, CartProductAdapter.Vie
         fun bind(product: CartProductEntity) {
             binding.tvProductName.text = product.name
             binding.tvProductPrice.text = binding.root.context.getString(R.string.price, product.price)
+            if (product.discountedPrice >= 0) {
+                binding.tvProductPrice.alpha = 0.5f
+                binding.tvDiscountedPrice.visibility = View.VISIBLE
+                binding.tvDiscountedPrice.text = binding.root.context.getString(R.string.price, product.discountedPrice)
+            } else {
+                binding.tvDiscountedPrice.visibility = View.GONE
+            }
         }
     }
 }

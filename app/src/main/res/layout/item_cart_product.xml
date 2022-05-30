@@ -40,4 +40,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Test" />
 
+    <TextView
+        android:id="@+id/tv_discounted_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_price"
+        tools:text="Test" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
