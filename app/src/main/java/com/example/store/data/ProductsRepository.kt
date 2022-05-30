@@ -11,7 +11,6 @@ import com.example.store.data.remote.service.ProductsService
 import com.example.store.domain.model.Product
 import com.example.store.domain.repository.IProductsRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import retrofit2.Call
 import javax.inject.Inject
 

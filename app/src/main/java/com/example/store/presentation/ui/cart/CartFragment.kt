@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.store.R
+import com.example.store.core.Event
 import com.example.store.databinding.FragmentCartBinding
 import com.example.store.presentation.base.BaseFragment
 import com.example.store.presentation.ui.cart.adapter.CartProductAdapter
@@ -21,7 +23,6 @@ class CartFragment : BaseFragment() {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: CartProductAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +54,34 @@ class CartFragment : BaseFragment() {
                 }
                 binding.tvTotalAmount.text = getString(R.string.price, it.total)
             }
+
+            failure.observe(viewLifecycleOwner) {
+                hideProgress()
+                showError(it)
+            }
+
+            event.observe(viewLifecycleOwner) {
+                when (it) {
+                    is Event.OrderPlaced -> {
+                        showMessage(getString(R.string.order_placed))
+                        findNavController().popBackStack()
+                    }
+                    is Event.OrderCanceled -> {
+                        showMessage(getString(R.string.order_canceled))
+                        findNavController().popBackStack()
+                    }
+                    else -> {}
+                }
+            }
+
+            discounts.observe(viewLifecycleOwner) {
+                if (it.count > 0) {
+                    binding.tvDiscountSummary.visibility = View.VISIBLE
+                    binding.tvDiscountSummary.text = resources.getQuantityString(R.plurals.discount_summary, it.count, it.count, it.discounts, it.items)
+                } else {
+                    binding.tvDiscountSummary.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -67,7 +96,7 @@ class CartFragment : BaseFragment() {
         binding.rvProducts.adapter = adapter
 
         binding.btnCancelOrder.setOnClickListener {
-            viewModel.clearCart()
+            viewModel.clearCart(true)
         }
 
         binding.btnPlaceOrder.setOnClickListener {

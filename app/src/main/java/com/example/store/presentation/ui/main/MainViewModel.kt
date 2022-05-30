@@ -3,6 +3,8 @@ package com.example.store.presentation.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import arrow.core.None
+import com.example.store.R
+import com.example.store.core.Event
 import com.example.store.data.remote.model.Discount
 import com.example.store.domain.interactors.product.AddToCartUseCase
 import com.example.store.domain.interactors.product.GetProductsUseCase
@@ -39,6 +41,7 @@ class MainViewModel @Inject constructor(
     fun addToCart(product: FullProduct) {
         addToCartUseCase(product.toEntity(), viewModelScope) {
             it.fold(::handleFailure) {
+                handleEvent(Event.Message(R.string.item_added_to_cart, product.name))
             }
         }
     }

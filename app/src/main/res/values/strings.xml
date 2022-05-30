@@ -19,4 +19,11 @@
     <string name="order_total">Total: </string>
     <string name="place_order">Place Order</string>
     <string name="cancel_order">Cancel</string>
+    <string name="order_placed">Thanks for your purchase!</string>
+    <string name="order_canceled">Your order was canceled</string>
+    <string name="item_added_to_cart">%s was added to your cart</string>
+    <plurals name="discount_summary">
+        <item quantity="one">* %d discount: %s was applied on item: %s</item>
+        <item quantity="other">* %d discounts: %s were applied on the following items: %s</item>
+    </plurals>
 </resources>

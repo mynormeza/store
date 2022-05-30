@@ -3,13 +3,15 @@ package com.example.store.presentation.ui.cart
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import arrow.core.None
+import com.example.store.core.Event
+import com.example.store.core.Failure
 import com.example.store.data.local.model.CartProductEntity
 import com.example.store.data.remote.model.Discount
 import com.example.store.domain.interactors.product.ClearCartUseCase
 import com.example.store.domain.interactors.product.DeleteCartItemUseCase
 import com.example.store.domain.interactors.product.GetCartProductUseCase
-import com.example.store.domain.model.Product
 import com.example.store.presentation.base.BaseViewModel
+import com.example.store.presentation.model.DiscountSummary
 import com.example.store.presentation.model.PaymentSummary
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,39 +29,61 @@ class CartViewModel @Inject constructor(
     val products get() = _products
     private val _summary = MutableLiveData<PaymentSummary>()
     val summary get() = _summary
+    private val _discounts = MutableLiveData<DiscountSummary>()
+    val discounts get() = _discounts
+
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
 
     fun loadCartProducts() {
         viewModelScope.launch {
             getCartProductUseCase(None)
-                .catch { cause -> }
+                .catch { handleFailure(Failure.CacheError) }
                 .collect { list ->
-
                     val bulkDiscount = Discount.fromJson(remoteConfig.getString(Discount.BULK))
                     val multiBuy = Discount.fromJson(remoteConfig.getString(Discount.MULTI_BUY))
                     var subTotal = 0f
                     var bDiscounted = 0f
                     val mCount = list.count { p -> multiBuy.codes.contains(p.code) }
-
                     var timesApplied = 0
+                    val discountSummary = DiscountSummary()
 
                     list.forEach { p ->
-                        if (mCount >= multiBuy.minValidQuantity && timesApplied < multiBuy.itemsToApply) {
+                        if (mCount >= multiBuy.minValidQuantity &&
+                            timesApplied < multiBuy.itemsToApply && multiBuy.codes.contains(p.code)
+                        ) {
                             bulkDiscount.codes.remove(p.code)
                             timesApplied++
                             bDiscounted += p.price * multiBuy.discountPercent
                         }
                         subTotal += p.price
                     }
-                    val bCount = list.count { p -> bulkDiscount.codes.contains(p.code) }
 
+                    val bCount = list.count { p -> bulkDiscount.codes.contains(p.code) }
                     if (bCount >= bulkDiscount.minValidQuantity) {
-                        bDiscounted += bulkDiscount.reducePriceBy * bCount
+                        val reductionFactor = if (bulkDiscount.itemsToApply == 0) {
+                            bCount
+                        } else {
+                            bulkDiscount.itemsToApply
+                        }
+                        bDiscounted += bulkDiscount.reducePriceBy * reductionFactor
+                    }
+
+                    list.distinctBy { it.code }.forEach { p ->
+                        if (bulkDiscount.codes.contains(p.code) && bCount >= bulkDiscount.minValidQuantity) {
+                            discountSummary.items += " ${p.name}"
+                            discountSummary.discounts += "${bulkDiscount.label} | "
+                            discountSummary.count++
+                        }
+                        if (multiBuy.codes.contains(p.code) && mCount >= multiBuy.minValidQuantity) {
+                            discountSummary.items += " ${p.name}"
+                            discountSummary.discounts += "${multiBuy.label} | "
+                            discountSummary.count++
+                        }
                     }
 
                     _summary.value = PaymentSummary(subTotal, bDiscounted, subTotal - bDiscounted)
-
                     _products.value = list
+                    _discounts.value = discountSummary
                 }
         }
     }
@@ -70,9 +94,16 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun clearCart() {
+    fun clearCart(isCanceled: Boolean = false) {
         clearCartUseCase(None, viewModelScope) {
-            it.fold(::handleFailure) {}
+            it.fold(::handleFailure) {
+                val event = if (isCanceled) {
+                    Event.OrderCanceled
+                } else {
+                    Event.OrderPlaced
+                }
+                handleEvent(event)
+            }
         }
     }
 }

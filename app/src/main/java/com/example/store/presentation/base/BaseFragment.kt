@@ -18,4 +18,8 @@ abstract class BaseFragment : Fragment() {
     fun showError(failure: Failure) {
         requireContext().myToast(getString(R.string.general_error))
     }
+
+    fun showMessage(message: String) {
+        requireContext().myToast(message)
+    }
 }

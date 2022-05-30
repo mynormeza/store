@@ -6,11 +6,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.store.R
+import com.example.store.core.Event
 import com.example.store.databinding.FragmentMainBinding
 import com.example.store.databinding.ProductBottomSheetBinding
 import com.example.store.presentation.base.BaseFragment
 import com.example.store.presentation.model.FullProduct
 import com.example.store.presentation.ui.main.adapter.ProductsAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,8 +32,14 @@ class MainFragment : BaseFragment() {
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        viewModel.loadProducts()
 
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        showProgress()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +52,6 @@ class MainFragment : BaseFragment() {
         binding.rvProducts.adapter = adapter
 
         with(viewModel) {
-            loadProducts()
 
             products.observe(viewLifecycleOwner) {
                 if (it.isEmpty()) {
@@ -55,11 +62,19 @@ class MainFragment : BaseFragment() {
                     binding.rvProducts.visibility = View.VISIBLE
                     binding.tvEmptyMsg.visibility = View.GONE
                 }
+                hideProgress()
             }
 
             failure.observe(viewLifecycleOwner) {
                 hideProgress()
                 showError(it)
+            }
+
+            event.observe(viewLifecycleOwner) {
+                when (it) {
+                    is Event.Message -> showMessage(getString(it.stringRes, it.message))
+                    else -> {}
+                }
             }
         }
     }
@@ -88,6 +103,8 @@ class MainFragment : BaseFragment() {
     private fun showProductDetails(product: FullProduct) {
 
         val dialog = BottomSheetDialog(requireContext())
+        dialog.behavior.skipCollapsed = true
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         val view = layoutInflater.inflate(R.layout.product_bottom_sheet, null)
         val binding = ProductBottomSheetBinding.bind(view)
