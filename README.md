@@ -1,13 +1,13 @@
-#App behavior
+# App behavior
 The display of data in the app is online only (needs internet connection) to display the list of product, but the cart has full off line support. If there is no data the list will show an empty message, if there is no internet while loading data from the network a message about it will appear.
 
 The list of products in the cart and all the info in the cart have live updates from the database, this way when an object is deleted it will update the list and summary automatically. The user is able to cancel or place an order, both operation will clear the cart, the user is also able to delete products by swiping items from the list.
 
 Both lists (cart and main) have a ListAdapter with DiffUtil to efficiently perform the updates and to show smooth animation when deleting products.
 
-*Discounts* can be modified out side of the app context (in firebase) but the app is limited to 2 types of discount according to the challenge.
+**Discounts** can be modified out side of the app context (in firebase) but the app is limited to 2 types of discount according to the challenge.
 
-#App arch
+# App arch
 
 I tried to follow Clean Architecture principles as much as I could between presentation, domain and data packages. For simplicity the remote and local layers are inside the same package. The main architecture of the app is MVVM
 
@@ -15,7 +15,7 @@ Managed the dependency injection with Hilt. I used Retrofit to load data from th
 
 There is a base fragment to perform operations that are to be used in most fragments of the app, in this case the loading state, there is also a baseViewModel that handle failures/events that can be used to log crashes by sending throwable or exception if the failure object accepts them as param. The idea of both is to have common blocks of code to reuse
 
-*Discounts* are created using firebase remote config, I used the following format for each discount, this way we can modify them:
+**Discounts** are created using firebase remote config, I used the following format for each discount, this way we can modify them:
 
 ```json
 {
