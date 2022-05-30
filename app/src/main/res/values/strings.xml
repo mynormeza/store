@@ -18,4 +18,5 @@
     <string name="order_discount">Discount applied: </string>
     <string name="order_total">Total: </string>
     <string name="place_order">Place Order</string>
+    <string name="cancel_order">Cancel</string>
 </resources>

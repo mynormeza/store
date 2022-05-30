@@ -22,15 +22,10 @@ class CartFragment : BaseFragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: CartProductAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
@@ -44,20 +39,20 @@ class CartFragment : BaseFragment() {
         with(viewModel) {
             products.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
-
             }
 
             summary.observe(viewLifecycleOwner) {
                 binding.tvSubTotalAmount.text = getString(R.string.price, it.subTotal)
                 if (it.discount > 0) {
                     binding.tvDiscountAmount.visibility = View.VISIBLE
+                    binding.tvDiscounts.visibility = View.VISIBLE
                     binding.tvDiscountAmount.text = getString(R.string.price, it.discount)
                 } else {
                     binding.tvDiscountAmount.visibility = View.GONE
+                    binding.tvDiscounts.visibility = View.GONE
                 }
                 binding.tvTotalAmount.text = getString(R.string.price, it.total)
             }
-
         }
     }
 
@@ -70,6 +65,29 @@ class CartFragment : BaseFragment() {
         adapter = CartProductAdapter()
         binding.rvProducts.layoutManager = LinearLayoutManager(requireContext())
         binding.rvProducts.adapter = adapter
-    }
 
+        binding.btnCancelOrder.setOnClickListener {
+            viewModel.clearCart()
+        }
+
+        binding.btnPlaceOrder.setOnClickListener {
+            viewModel.clearCart()
+        }
+
+        val swipeGesture = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = adapter.currentList[viewHolder.adapterPosition]
+                viewModel.deleteFromCart(item.id)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeGesture)
+        itemTouchHelper.attachToRecyclerView(binding.rvProducts)
+    }
 }

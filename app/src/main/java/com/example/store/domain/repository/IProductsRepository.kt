@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface IProductsRepository {
     fun getProducts(): Either<Failure, List<Product>>
-    fun getCartProducts(): Flow<List<Product>>
+    fun getCartProducts(): Flow<List<CartProductEntity>>
     fun addToCart(product: CartProductEntity): Either<Failure, None>
+    fun deleteFromCart(id: Long): Either<Failure, None>
+    fun clearCart(): Either<Failure, None>
 }

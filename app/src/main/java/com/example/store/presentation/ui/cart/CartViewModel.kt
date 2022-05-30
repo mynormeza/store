@@ -3,7 +3,10 @@ package com.example.store.presentation.ui.cart
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import arrow.core.None
+import com.example.store.data.local.model.CartProductEntity
 import com.example.store.data.remote.model.Discount
+import com.example.store.domain.interactors.product.ClearCartUseCase
+import com.example.store.domain.interactors.product.DeleteCartItemUseCase
 import com.example.store.domain.interactors.product.GetCartProductUseCase
 import com.example.store.domain.model.Product
 import com.example.store.presentation.base.BaseViewModel
@@ -17,8 +20,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val getCartProductUseCase: GetCartProductUseCase,
+    private val deleteCartItemUseCase: DeleteCartItemUseCase,
+    private val clearCartUseCase: ClearCartUseCase,
 ) : BaseViewModel() {
-    private val _products = MutableLiveData<List<Product>>()
+    private val _products = MutableLiveData<List<CartProductEntity>>()
     val products get() = _products
     private val _summary = MutableLiveData<PaymentSummary>()
     val summary get() = _summary
@@ -55,9 +60,19 @@ class CartViewModel @Inject constructor(
                     _summary.value = PaymentSummary(subTotal, bDiscounted, subTotal - bDiscounted)
 
                     _products.value = list
-
                 }
         }
+    }
 
+    fun deleteFromCart(id: Long) {
+        deleteCartItemUseCase(id, viewModelScope) {
+            it.fold(::handleFailure) {}
+        }
+    }
+
+    fun clearCart() {
+        clearCartUseCase(None, viewModelScope) {
+            it.fold(::handleFailure) {}
+        }
     }
 }

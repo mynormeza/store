@@ -6,18 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.store.R
+import com.example.store.data.local.model.CartProductEntity
 import com.example.store.databinding.ItemCartProductBinding
-import com.example.store.domain.model.Product
 
-
-class CartProductAdapter : ListAdapter<Product, CartProductAdapter.ViewHolder>(DiffCallback()) {
+class CartProductAdapter : ListAdapter<CartProductEntity, CartProductAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemCartProductBinding.inflate(
                 LayoutInflater.from(
                     parent.context
-                ), parent, false
+                ),
+                parent, false
             )
         )
     }
@@ -27,23 +27,22 @@ class CartProductAdapter : ListAdapter<Product, CartProductAdapter.ViewHolder>(D
         holder.bind(product)
     }
 
-
     override fun getItemCount(): Int {
         return currentList.size
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<Product>() {
+    private class DiffCallback : DiffUtil.ItemCallback<CartProductEntity>() {
 
-        override fun areItemsTheSame(oldItem: Product, newItem: Product) =
-            oldItem.code == newItem.code
+        override fun areItemsTheSame(oldItem: CartProductEntity, newItem: CartProductEntity) =
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Product, newItem: Product) =
+        override fun areContentsTheSame(oldItem: CartProductEntity, newItem: CartProductEntity) =
             oldItem == newItem
     }
 
     class ViewHolder(private var binding: ItemCartProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(product: Product) {
+        fun bind(product: CartProductEntity) {
             binding.tvProductName.text = product.name
             binding.tvProductPrice.text = binding.root.context.getString(R.string.price, product.price)
         }

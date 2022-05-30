@@ -35,16 +35,31 @@ class ProductsRepository @Inject constructor(
         }
     }
 
-
-    override fun getCartProducts(): Flow<List<Product>> {
-        return database.productsDao().getAll().map { list ->
-            list.map  { it.toProduct() }
-        }
+    override fun getCartProducts(): Flow<List<CartProductEntity>> {
+        return database.productsDao().getAll()
     }
 
     override fun addToCart(product: CartProductEntity): Either<Failure, None> {
         return try {
             database.productsDao().insert(product)
+            Either.Right(None)
+        } catch (e: Throwable) {
+            Either.Left(Failure.CacheError)
+        }
+    }
+
+    override fun deleteFromCart(id: Long): Either<Failure, None> {
+        return try {
+            database.productsDao().deleteById(id)
+            Either.Right(None)
+        } catch (e: Throwable) {
+            Either.Left(Failure.CacheError)
+        }
+    }
+
+    override fun clearCart(): Either<Failure, None> {
+        return try {
+            database.productsDao().deleteAll()
             Either.Right(None)
         } catch (e: Throwable) {
             Either.Left(Failure.CacheError)

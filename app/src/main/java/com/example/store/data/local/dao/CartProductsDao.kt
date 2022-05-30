@@ -15,6 +15,12 @@ interface CartProductsDao {
     @Query("SELECT * FROM products;")
     fun getAll(): Flow<List<CartProductEntity>>
 
+    @Query("DELETE FROM products WHERE id = :id;")
+    fun deleteById(id: Long)
+
+    @Query("DELETE FROM products")
+    fun deleteAll()
+
     @Update
     fun update(product: CartProductEntity)
 
