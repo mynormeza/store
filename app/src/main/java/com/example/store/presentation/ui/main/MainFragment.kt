@@ -7,6 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.store.R
 import com.example.store.core.Event
+import com.example.store.core.Failure
+import com.example.store.core.NetworkValidator
 import com.example.store.databinding.FragmentMainBinding
 import com.example.store.databinding.ProductBottomSheetBinding
 import com.example.store.presentation.base.BaseFragment
@@ -55,8 +57,7 @@ class MainFragment : BaseFragment() {
 
             products.observe(viewLifecycleOwner) {
                 if (it.isEmpty()) {
-                    binding.rvProducts.visibility = View.GONE
-                    binding.tvEmptyMsg.visibility = View.VISIBLE
+                    showNoDataMessage(getString(R.string.empty_msg))
                 } else {
                     adapter.submitList(it)
                     binding.rvProducts.visibility = View.VISIBLE
@@ -66,8 +67,12 @@ class MainFragment : BaseFragment() {
             }
 
             failure.observe(viewLifecycleOwner) {
+                if (it == Failure.NetworkConnection) {
+                   showNoDataMessage(getString(R.string.not_network))
+                } else {
+                    showError(it)
+                }
                 hideProgress()
-                showError(it)
             }
 
             event.observe(viewLifecycleOwner) {
@@ -98,6 +103,12 @@ class MainFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showNoDataMessage(msg: String) {
+        binding.tvEmptyMsg.text = msg
+        binding.rvProducts.visibility = View.GONE
+        binding.tvEmptyMsg.visibility = View.VISIBLE
     }
 
     private fun showProductDetails(product: FullProduct) {

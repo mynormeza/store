@@ -6,29 +6,34 @@ import com.google.gson.reflect.TypeToken
 
 data class Discount(
     @SerializedName("codes")
-    val codes: MutableList<String>,
+    val codes: MutableList<String> = mutableListOf(),
     @SerializedName("discount_percent")
-    val discountPercent: Float,
+    val discountPercent: Float = 0f,
     @SerializedName("min_valid_quantity")
-    val minValidQuantity: Int,
+    val minValidQuantity: Int = 0,
     @SerializedName("items_to_apply")
-    val itemsToApply: Int,
+    val itemsToApply: Int = 0,
     @SerializedName("reduce_price_by")
-    val reducePriceBy: Int,
+    val reducePriceBy: Int = 0,
     @SerializedName("label")
-    val label: String,
+    val label: String = "",
     @SerializedName("message")
-    val message: String,
+    val message: String = "",
 ) {
     companion object {
         const val MULTI_BUY = "multi_buy_discount"
         const val BULK = "bulk_discount"
 
-        fun fromJson(value: String): Discount {
+        fun fromJson(value: String?): Discount {
             val gson = Gson()
             val type = object : TypeToken<Discount>() {
             }.type
-            return gson.fromJson(value, type)
+
+            return if (value.isNullOrEmpty()) {
+                Discount()
+            } else {
+                gson.fromJson(value, type)
+            }
         }
     }
 }

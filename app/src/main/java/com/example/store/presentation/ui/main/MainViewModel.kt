@@ -26,14 +26,17 @@ class MainViewModel @Inject constructor(
     fun loadProducts() {
         getProductsUseCase(None, viewModelScope) {
             it.fold(::handleFailure) { list ->
-                val discounts = mutableListOf<Discount>()
-                discounts.add(Discount.fromJson(remoteConfig.getString(Discount.BULK)))
-                discounts.add(Discount.fromJson(remoteConfig.getString(Discount.MULTI_BUY)))
+                remoteConfig.fetch().addOnCompleteListener {
+                    val discounts = mutableListOf<Discount>()
+                    discounts.add(Discount.fromJson(remoteConfig.getString(Discount.BULK)))
+                    discounts.add(Discount.fromJson(remoteConfig.getString(Discount.MULTI_BUY)))
 
-                _products.value = list.map { p ->
-                    val dis = discounts.firstOrNull() { d -> d.codes.contains(p.code) }
-                    FullProduct(p.code, p.name, p.price, dis?.label ?: "", dis?.message ?: "")
+                    _products.value = list.map { p ->
+                        val dis = discounts.firstOrNull() { d -> d.codes.contains(p.code) }
+                        FullProduct(p.code, p.name, p.price, dis?.label ?: "", dis?.message ?: "")
+                    }
                 }
+
             }
         }
     }

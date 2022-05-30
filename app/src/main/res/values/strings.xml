@@ -10,6 +10,7 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="added_to_cart">%s added to cart</string>
     <string name="checkout_disclaimer">Prices for all promotions are seen at checkout</string>
+    <string name="not_network">Please connect to the internet</string>
 
     <string name="general_error">Some error occurred</string>
     <string name="empty_msg">No products yet</string>
