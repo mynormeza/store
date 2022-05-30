@@ -46,6 +46,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -73,6 +78,7 @@ dependencies {
     implementation(Dependencies.firebaseConfig)
     implementation(Dependencies.firebaseAnalytics)
 
+    testImplementation(Dependencies.androidTestCore)
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.junitExt)
     androidTestImplementation(Dependencies.espressoCore)

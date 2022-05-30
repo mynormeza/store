@@ -11,6 +11,8 @@ object Versions {
     const val hilt = "2.40.5"
     const val room = "2.4.1"
     const val firebaseBom = "30.0.0"
+    const val androidTestCoreVersion = "1.1.0"
+
 
     const val androidLifecycle = "2.4.0"
     const val coroutines = "1.6.0"
@@ -38,6 +40,7 @@ object Dependencies {
     const val mockk ="io.mockk:mockk:${Versions.mockkVersion}"
     const val kluent = "org.amshove.kluent:kluent:${Versions.kluent}"
     const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
+    const val androidTestCore = "androidx.test:core:${Versions.androidTestCoreVersion}"
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"

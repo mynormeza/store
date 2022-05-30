@@ -1,9 +1,13 @@
 package com.example.store
 
+import android.os.Build
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import arrow.core.Either
 import com.example.store.core.Failure
 import com.example.store.core.NetworkValidator
 import com.example.store.data.ProductsRepository
+import com.example.store.data.local.ProductsDatabase
 import com.example.store.data.remote.response.ProductsResponse
 import com.example.store.data.remote.service.ProductsService
 import com.example.store.domain.model.Product
@@ -16,9 +20,18 @@ import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import retrofit2.Call
 import retrofit2.Response
 
+@RunWith(RobolectricTestRunner::class)
+@Config(
+    application = ViewModelTest.ApplicationStub::class,
+    manifest = Config.NONE,
+    sdk = [Build.VERSION_CODES.O_MR1]
+)
 class RepositoryTest {
     private lateinit var networkRepository: ProductsRepository
     @Rule
@@ -31,9 +44,15 @@ class RepositoryTest {
     @MockK private lateinit var productsCall: Call<ProductsResponse>
     @MockK private lateinit var productsResponse: Response<ProductsResponse>
 
+    private val database = Room.inMemoryDatabaseBuilder(
+        ApplicationProvider.getApplicationContext(),
+        ProductsDatabase::class.java)
+        .allowMainThreadQueries()
+        .build()
+
     @Before
     fun setUp() {
-        networkRepository = ProductsRepository(service, networkValidator)
+        networkRepository = ProductsRepository(service, networkValidator, database)
     }
 
     @Test

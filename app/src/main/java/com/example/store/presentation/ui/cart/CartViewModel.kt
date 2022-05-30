@@ -46,7 +46,6 @@ class CartViewModel @Inject constructor(
                     val mCount = list.count { p -> multiBuy.codes.contains(p.code) }
                     var timesApplied = 0
                     val discountSummary = DiscountSummary()
-                    val bCount = list.count { p -> bulkDiscount.codes.contains(p.code) }
 
                     list.forEach { p ->
                         if (mCount >= multiBuy.minValidQuantity &&
@@ -60,6 +59,7 @@ class CartViewModel @Inject constructor(
                         subTotal += p.price
                     }
 
+                    val bCount = list.count { p -> bulkDiscount.codes.contains(p.code) }
                     if (bCount >= bulkDiscount.minValidQuantity) {
                         val reductionFactor = if (bulkDiscount.itemsToApply == 0) {
                             bCount
