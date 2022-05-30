@@ -3,6 +3,7 @@ package com.example.store.presentation.ui.main
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.store.R
 import com.example.store.databinding.FragmentMainBinding
@@ -16,15 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment : BaseFragment() {
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
     private val viewModel by viewModels<MainViewModel>()
     private var _binding: FragmentMainBinding? = null
     private lateinit var adapter: ProductsAdapter
@@ -81,7 +73,7 @@ class MainFragment : BaseFragment() {
         return when (item.itemId) {
 
             R.id.action_cart -> {
-
+                findNavController().navigate(R.id.cartFragment)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

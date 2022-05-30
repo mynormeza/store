@@ -3,6 +3,7 @@ package com.example.store
 import android.app.Application
 import android.os.Build
 import arrow.core.Either
+import com.example.store.domain.interactors.product.AddToCartUseCase
 import com.example.store.domain.interactors.product.GetProductsUseCase
 import com.example.store.domain.model.Product
 import com.example.store.presentation.ui.main.MainViewModel
@@ -30,10 +31,12 @@ class ViewModelTest {
 
     @MockK
     private lateinit var getProducts: GetProductsUseCase
+    @MockK
+    private lateinit var addToCart: AddToCartUseCase
 
     @Before
     fun setUp() {
-        mainViewModel = MainViewModel(getProducts)
+        mainViewModel = MainViewModel(getProducts, addToCart)
     }
 
     @Test

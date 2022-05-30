@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 
 data class Discount(
     @SerializedName("codes")
-    val codes: List<String>,
+    val codes: MutableList<String>,
     @SerializedName("discount_percent")
     val discountPercent: Float,
     @SerializedName("min_valid_quantity")

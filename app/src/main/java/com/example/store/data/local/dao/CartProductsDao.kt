@@ -2,6 +2,7 @@ package com.example.store.data.local.dao
 
 import androidx.room.*
 import com.example.store.data.local.model.CartProductEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartProductsDao {
@@ -12,7 +13,7 @@ interface CartProductsDao {
     fun insertAll(products: List<CartProductEntity>)
 
     @Query("SELECT * FROM products;")
-    fun getAll(): List<CartProductEntity>
+    fun getAll(): Flow<List<CartProductEntity>>
 
     @Update
     fun update(product: CartProductEntity)

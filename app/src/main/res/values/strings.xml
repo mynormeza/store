@@ -13,4 +13,9 @@
 
     <string name="general_error">Some error occurred</string>
     <string name="empty_msg">No products yet</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="order_subtotal">Subtotal: </string>
+    <string name="order_discount">Discount applied: </string>
+    <string name="order_total">Total: </string>
+    <string name="place_order">Place Order</string>
 </resources>

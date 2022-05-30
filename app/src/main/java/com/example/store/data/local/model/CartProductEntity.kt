@@ -2,6 +2,7 @@ package com.example.store.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.store.domain.model.Product
 
 @Entity(tableName = "products")
 data class CartProductEntity(
@@ -10,4 +11,10 @@ data class CartProductEntity(
     val code: String,
     val name: String,
     val price: Float,
-)
+) {
+    fun toProduct() = Product(
+        code,
+        name,
+        price,
+    )
+}

@@ -10,6 +10,8 @@ import com.example.store.data.remote.response.ProductsResponse
 import com.example.store.data.remote.service.ProductsService
 import com.example.store.domain.model.Product
 import com.example.store.domain.repository.IProductsRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import retrofit2.Call
 import javax.inject.Inject
 
@@ -30,6 +32,13 @@ class ProductsRepository @Inject constructor(
                 )
             }
             false -> Either.Left(Failure.NetworkConnection)
+        }
+    }
+
+
+    override fun getCartProducts(): Flow<List<Product>> {
+        return database.productsDao().getAll().map { list ->
+            list.map  { it.toProduct() }
         }
     }
 
